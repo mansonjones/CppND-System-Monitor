@@ -48,32 +48,31 @@ vector<Process>& System::Processes() {
 }
 
 // DONE: Return the system's kernel identifier (string)
-std::string System::Kernel() { 
+std::string System::Kernel() const { 
     return LinuxParser::Kernel(); 
 }
 
 // TODO: Return the system's memory utilization
-float System::MemoryUtilization() { 
+float System::MemoryUtilization() const { 
     return LinuxParser::MemoryUtilization(); 
 }
 
-// DONE: Return the operating system name
-std::string System::OperatingSystem() { 
+std::string System::OperatingSystem() const { 
     return LinuxParser::OperatingSystem(); 
 }
 
 // TODO: Return the number of processes actively running on the system
-int System::RunningProcesses() { 
+int System::RunningProcesses() const { 
     return LinuxParser::RunningProcesses(); 
 }
 
 // TODO: Return the total number of processes on the system
-int System::TotalProcesses() { 
+int System::TotalProcesses() const { 
     return LinuxParser::TotalProcesses(); 
 }
 
 // TODO: Return the number of seconds since the system started running
-long int System::UpTime() { 
+long int System::UpTime() const { 
     // call the format function
     return LinuxParser::UpTime(); 
 }

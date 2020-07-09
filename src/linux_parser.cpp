@@ -10,7 +10,6 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-// DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
   string lineBuffer;
   string key, value;
@@ -32,7 +31,6 @@ string LinuxParser::OperatingSystem() {
   return value;
 }
 
-// DONE: An example of how to read data from the filesystem
 string LinuxParser::Kernel() {
   string os, version, kernel;
   string lineBuffer;
@@ -71,7 +69,6 @@ float LinuxParser::MemoryUtilization() {
   string key, value;
   float memTotal = 1.0;
   float memFree = 0.0;
-  //float memAvailable = 0.0;
   std::ifstream filestream(kProcDirectory + kMeminfoFilename);
   if (filestream.is_open()) {
     while (std::getline(filestream, lineBuffer)) {
@@ -83,11 +80,6 @@ float LinuxParser::MemoryUtilization() {
         if (key == "MemFree:") {
           memFree = atof(value.c_str());
         }
-        /*
-        if (key == "MemAvailable:") {
-          memAvailable = atof(value.c_str());
-        }
-        */
       }
     }
   }
@@ -95,7 +87,6 @@ float LinuxParser::MemoryUtilization() {
   return (memTotal - memFree) / memTotal;
 }
 
-// TODO: Read and return the system uptime
 long LinuxParser::UpTime() { 
   string uptime1, uptime2;
   string lineBuffer;
@@ -198,7 +189,6 @@ vector<string> LinuxParser::CpuUtilization() {
   return utilizations;
 }
 
-// TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { 
   string key, value;
   string lineBuffer;
@@ -215,7 +205,6 @@ int LinuxParser::TotalProcesses() {
   return 0; 
 }
 
-// TODO: Read and return the number of running processes
 int LinuxParser::RunningProcesses() { 
   string key, value;
   string lineBuffer;
@@ -225,7 +214,7 @@ int LinuxParser::RunningProcesses() {
       std::istringstream linestream(lineBuffer);
       linestream >> key >> value;
       if (key == "procs_running") {
-        return stoi(value);
+        return stoi(std::string(value));
       }
     }
   }
