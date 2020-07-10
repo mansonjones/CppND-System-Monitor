@@ -41,6 +41,8 @@ vector<Process>& System::Processes() {
         process.CpuUtilization(LinuxParser::ActiveJiffies(process))
         LinuxParser::Jiffies());
     }
+
+    std::sort(processes_.begin(), processes_.end(), std::g
     */
     Process process = Process(1);
     processes_.push_back(process);

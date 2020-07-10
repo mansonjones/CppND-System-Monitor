@@ -221,11 +221,11 @@ int LinuxParser::RunningProcesses() {
   return 0;
 }
 
-// TODO: Read and return the command associated with a process
 string LinuxParser::Command(int pid) { 
   string command;
   string lineBuffer;
-  std::ifstream stream(kProcDirectory + std::to_string(pid) + kCmdlineFilename);
+  std::string fileName{kProcDirectory + std::to_string(pid) + kCmdlineFilename};
+  std::ifstream stream(fileName);
   if (stream.is_open()) {
     std::getline(stream, lineBuffer);
     return lineBuffer;
@@ -233,11 +233,11 @@ string LinuxParser::Command(int pid) {
   return string(); 
 }
 
-// TODO: Read and return the memory used by a process
 string LinuxParser::Ram(int pid) { 
   string key, value;
   string lineBuffer;
-  std::ifstream filestream(kProcDirectory + std::to_string(pid) + kStatusFilename);
+  std::string fileName{kProcDirectory + std::to_string(pid) + kStatusFilename};
+  std::ifstream filestream(fileName);
   if (filestream.is_open()) {
     while (std::getline(filestream, lineBuffer)) {
       std::istringstream linestream(lineBuffer);
@@ -250,13 +250,12 @@ string LinuxParser::Ram(int pid) {
   }
   return string(); 
 }
-
-// TODO: Read and return the user ID associated with a process
-// 
+ 
 string LinuxParser::Uid(int pid) { 
   string key, value;
   string lineBuffer;
-  std::ifstream filestream(kProcDirectory + std::to_string(pid) + kStatusFilename);
+  std::string fileName{kProcDirectory + std::to_string(pid) + kStatusFilename};
+  std::ifstream filestream(fileName);
   if (filestream.is_open()) {
     while (std::getline(filestream, lineBuffer)) {
       std::istringstream linestream(lineBuffer);
@@ -269,13 +268,12 @@ string LinuxParser::Uid(int pid) {
   }
   return string(); 
 }
-
-// TODO: Read and return the user associated with a process
-// 
+ 
 string LinuxParser::User(int pid) 
 { 
   string token;
-  std::ifstream filestream(kPasswordPath);
+  std::string fileName{kPasswordPath};
+  std::ifstream filestream(fileName);
   string uid = Uid(pid);
   std::vector<string> tokens;
   const char delimiter = ':';
@@ -291,12 +289,11 @@ string LinuxParser::User(int pid)
   return string(); 
 }
 
-// TODO: Read and return the uptime of a process
-// 
 long LinuxParser::UpTime(int pid) { 
   string uptime1, uptime2;
   string lineBuffer;
-  std::ifstream stream(kProcDirectory + std::to_string(pid) + kUptimeFilename);
+  std::string fileName{kProcDirectory + std::to_string(pid) + kUptimeFilename};
+  std::ifstream stream(fileName);
   if (stream.is_open()) {
     std::getline(stream, lineBuffer);
     std::istringstream linestream(lineBuffer);
