@@ -1,6 +1,8 @@
 #include "ncurses_display.h"
 #include "system.h"
 
+#include "linux_parser.h"
+
 #include <iostream>
 
 void testSystem() {
@@ -27,9 +29,18 @@ void testProcess(int pid) {
   std::cout << "UpTime() " << process.UpTime() << std::endl;
 }
 
+void testJiffies(int pid) {
+  std::cout << "LinuxParser::Jiffies() " << LinuxParser::Jiffies() << std::endl;
+  std::cout << "LinuxParser::ActiveJiffies(pid) " << LinuxParser::ActiveJiffies(pid) << std::endl;
+  std::cout << "LinuxParser::ActiveJiffies() " << LinuxParser::ActiveJiffies() << std::endl;
+  std::cout << "LinuxParser::IdleJiffies() " << LinuxParser::IdleJiffies() << std::endl;
+
+}
+
 int main() {
   System system;
   testSystem();
   testProcess(1182);
+  testJiffies(1182);
   // NCursesDisplay::Display(system);
 }
