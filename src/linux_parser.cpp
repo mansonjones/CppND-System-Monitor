@@ -243,7 +243,8 @@ string LinuxParser::Ram(int pid) {
       std::istringstream linestream(lineBuffer);
       while (linestream >> key >> value) {
         if (key == "VmSize:") {
-          return value;
+          // convert from kilobytes to megabytes
+          return std::to_string(atol(value.c_str())/1000);
         }
       }
     }
