@@ -2,8 +2,9 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
-
 #include "linux_parser.h"
+
+#include <iostream> // remove after debugging
 
 using std::stof;
 using std::string;
@@ -100,67 +101,55 @@ long LinuxParser::UpTime() {
   return 0; 
 }
 
-// TODO: Read and return the number of jiffies for the system
+// Total number of ticks since the last boot.
+// The second term is the number of ticks per second,
+// typicall 100
+
 long LinuxParser::Jiffies() { 
-  string key, userJiffies, niceJiffies, systemJiffies, idleJiffies;
-  string lineBuffer;
-  std::ifstream filestream(kProcDirectory + kStatFilename);
-  if (filestream.is_open()) {
-    std::getline(filestream, lineBuffer);
-    std::istringstream linestream(lineBuffer);
-    linestream >> key >> userJiffies >> niceJiffies >> systemJiffies >> idleJiffies;
-    if (key == "cpu") {
-      return atol(userJiffies.c_str());
-    }
-  }
-  return 0; 
+  return UpTime() * sysconf(_SC_CLK_TCK);  
 }
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { 
-string key, userJiffies, niceJiffies, systemJiffies, idleJiffies;
-  // 1 pid
-  // 2 comm
-  // 3 state (R, S, D, Z, T, t, W, X, x, K, W, P)
-  // 4 ppid
-  // 5 pgrp
-  // 6 session
-  // 7 tty nc
-  // 8 tpgid
-  // 9 flags
-  // 10 minflt
-  // 11 cminflt
-  // 12 majflt
-  // 13 cmajflt
-  // 14 utime - user time
-  // 15 stime - time in kernel mode
-  // 16 cutime - children user time
+
+long LinuxParser::ActiveJiffies(int pid) { 
+  string token;
+  std::string fileName{kProcDirectory + std::to_string(pid) + kStatFilename};
   
-  string lineBuffer;
-  std::ifstream filestream(kProcDirectory + kStatFilename);
-  if (filestream.is_open()) {
-    std::getline(filestream, lineBuffer);
-    std::istringstream linestream(lineBuffer);
-    linestream >> key >> userJiffies >> niceJiffies >> systemJiffies >> idleJiffies;
-    if (key == "cpu") {
-      return atol(userJiffies.c_str());
+  std::ifstream fileStream(fileName);
+  std::vector<std::string> tokens;
+  const char delimiter = ' ';
+  if (fileStream.is_open()) {
+    while (std::getline(fileStream, token, delimiter)) {
+      tokens.push_back(token);
     }
   }
-  return 0;
+  long val1 = atol(tokens[13].c_str());
+  long val2 = atol(tokens[14].c_str());
+  long val3 = atol(tokens[15].c_str());
+
+  return val1 + val2 + val3;
 }
 
-// TODO: Read and return the number of active jiffies for the system
+// Sum all of the jiffies for the cpu
 long LinuxParser::ActiveJiffies() { 
-  string key, userJiffies, niceJiffies, systemJiffies, idleJiffies;
   string lineBuffer;
-  std::ifstream filestream(kProcDirectory + kStatFilename);
-  if (filestream.is_open()) {
-    std::getline(filestream, lineBuffer);
-    std::istringstream linestream(lineBuffer);
-    linestream >> key >> userJiffies >> niceJiffies >> systemJiffies >> idleJiffies;
-    if (key == "cpu") {
-      return atol(userJiffies.c_str());
+  std::string fileName{kProcDirectory + kStatFilename};
+  std::ifstream fileStream(fileName);
+  if (fileStream.is_open()) {
+    while (std::getline(fileStream, lineBuffer)) {
+      std::istringstream lineStream(lineBuffer);
+      std::vector<std::string> jiffies;
+      for (std::string jiffie; lineStream >> jiffie;) {
+        jiffies.push_back(jiffie);
+      }
+      if (jiffies[0] == "cpu") {
+        long activeJiffies = 0;
+        for (unsigned int i = 1; i < jiffies.size(); ++i) {
+          activeJiffies += atol(jiffies[i].c_str());
+        }  
+       return activeJiffies;
+      }
     }
   }
   return 0; 
@@ -168,18 +157,23 @@ long LinuxParser::ActiveJiffies() {
 
 // TODO: Read and return the number of idle jiffies for the system
 long LinuxParser::IdleJiffies() { 
-  string key, userJiffies, niceJiffies, systemJiffies, idleJiffies;
   string lineBuffer;
-  std::ifstream filestream(kProcDirectory + kStatFilename);
-  if (filestream.is_open()) {
-    std::getline(filestream, lineBuffer);
-    std::istringstream linestream(lineBuffer);
-    linestream >> key >> userJiffies >> niceJiffies >> systemJiffies >> idleJiffies;
-    if (key == "cpu") {
-      return atol(userJiffies.c_str());
+  std::string fileName{kProcDirectory + kStatFilename};
+  std::ifstream fileStream(fileName);
+  if (fileStream.is_open()) {
+    while (std::getline(fileStream, lineBuffer)) {
+      std::istringstream lineStream(lineBuffer);
+      std::vector<std::string> jiffies;
+      for (std::string jiffie; lineStream >> jiffie;) {
+        jiffies.push_back(jiffie);
+      }
+      if (jiffies[0] == "cpu") {
+        long idleJiffies = atol(jiffies[LinuxParser::kIdle_].c_str()) + 
+                           atol(jiffies[LinuxParser::kIOwait_].c_str());
+       return idleJiffies;
+      }
     }
   }
-  return 0; 
 }
 
 // TODO: Read and return CPU utilization

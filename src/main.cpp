@@ -41,6 +41,6 @@ int main() {
   System system;
   testSystem();
   testProcess(1182);
-  testJiffies(1182);
+  testJiffies(1);
   // NCursesDisplay::Display(system);
 }
