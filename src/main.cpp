@@ -39,8 +39,8 @@ void testJiffies(int pid) {
 
 int main() {
   System system;
-  testSystem();
-  testProcess(1182);
-  testJiffies(1);
-  // NCursesDisplay::Display(system);
+  // testSystem();
+  // testProcess(1182);
+  // testJiffies(1);
+  NCursesDisplay::Display(system);
 }
