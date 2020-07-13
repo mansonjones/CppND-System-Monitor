@@ -17,7 +17,6 @@ using std::vector;
 
 Processor::Processor() {}
 
-// TODO: Return the aggregate CPU utilization
 float Processor::Utilization() {
     return CalculateUtilization<Processor>(*this);
 }

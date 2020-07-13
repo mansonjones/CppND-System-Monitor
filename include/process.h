@@ -14,13 +14,12 @@ class Process : public CPUMeasurement {
   int Pid() const;              
   std::string User() const;                     
   std::string Command() const;    
-  float CpuUtilization() const;                  // TODO: See src/process.cpp
+  float CpuUtilization() const;       
   std::string Ram() const;    
   long int UpTime() const;           
-  bool operator<(Process const& a) const;  // TODO: See src/process.cpp
+  bool operator<(Process const& a) const; 
 
   long ActiveJiffies() const;
-  // TODO: Declare any necessary private members
  private:
    int pid_;
 };

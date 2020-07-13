@@ -14,10 +14,8 @@ using std::vector;
 
 Process::Process(int pid) : pid_{pid} {}
 
-// TODO: Return this process's ID
 int Process::Pid() const { return pid_; }
 
-// TODO: Return this process's CPU utilization
 float Process::CpuUtilization() const {
     return CalculateUtilization<Process>(*this);
 }
@@ -42,8 +40,6 @@ long Process::ActiveJiffies() const {
     return LinuxParser::ActiveJiffies(pid_);
 }
 
-// TODO: Overload the "less than" comparison operator for Process objects
-// REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const { 
     
     if (Ram() < a.Ram()) {

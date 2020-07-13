@@ -6,7 +6,7 @@
 class Processor : public CPUMeasurement {
  public:
   Processor();
-  float Utilization();  // TODO: See src/processor.cpp
+  float Utilization(); 
   long ActiveJiffies() const;
   // TODO: Declare any necessary private members
  private:
