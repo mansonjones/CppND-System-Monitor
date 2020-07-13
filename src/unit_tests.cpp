@@ -1,26 +1,28 @@
-#include "ncurses_display.h"
-#include "system.h"
-
 #include "unit_tests.h"
+#include "system.h"
+#include "linux_parser.h"
 
 #include <iostream>
+#include <vector>
 
-/*
-void testSystem() {
+using std::cout;
+using std::endl;
+
+void UnitTests::testSystem() {
   System system;
-  std::cout << "System Tests" << std::endl;
-  std::cout << " MemoryUtilization " << system.MemoryUtilization() << std::endl;
-  std::cout << " UpTime() " << system.UpTime() << std::endl;
-  std::cout << " TotalProcesses " << system.TotalProcesses() << std::endl;
-  std::cout << " RunningProcesses " << system.RunningProcesses() << std::endl;
-  std::cout << " Kernel() " << system.Kernel() << std::endl;
-  std::cout << " OperatingSystem() " << system.OperatingSystem() << std::endl;
-  std::cout << " process ids" << std::endl;
+  cout << "System Tests" << std::endl;
+  cout << " MemoryUtilization " << system.MemoryUtilization() << std::endl;
+  cout << " UpTime() " << system.UpTime() << std::endl;
+  cout << " TotalProcesses " << system.TotalProcesses() << std::endl;
+  cout << " RunningProcesses " << system.RunningProcesses() << std::endl;
+  cout << " Kernel() " << system.Kernel() << std::endl;
+  cout << " OperatingSystem() " << system.OperatingSystem() << std::endl;
+  cout << " process ids" << std::endl;
   std::vector<Process> processes = system.Processes();
   std::cout << " cpu utilization" << system.Cpu().Utilization() << std::endl;
 }
 
-void testProcess(int pid) {
+void UnitTests::testProcess(int pid) {
   Process process(pid);
   std::cout << "Process Tests" << std::endl;
   std::cout << "Pid() " << process.Pid() << std::endl;
@@ -30,19 +32,10 @@ void testProcess(int pid) {
   std::cout << "UpTime() " << process.UpTime() << std::endl;
 }
 
-void testJiffies(int pid) {
+void UnitTests::testJiffies(int pid) {
   std::cout << "LinuxParser::Jiffies() " << LinuxParser::Jiffies() << std::endl;
   std::cout << "LinuxParser::ActiveJiffies(pid) " << LinuxParser::ActiveJiffies(pid) << std::endl;
   std::cout << "LinuxParser::ActiveJiffies() " << LinuxParser::ActiveJiffies() << std::endl;
   std::cout << "LinuxParser::IdleJiffies() " << LinuxParser::IdleJiffies() << std::endl;
 
-}
-*/
-
-int main() {
-  // System system;
-  UnitTests::testSystem();
-  UnitTests::testProcess(1182);
-  UnitTests::testJiffies(1);
-  // NCursesDisplay::Display(system);
 }
