@@ -2,9 +2,14 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
+#include <thread> // Needed for delay in CpuUtilization()
+#include <chrono> // Needed for delay in CpuUtilization()
+
 #include "linux_parser.h"
 
 #include <iostream> // remove after debugging
+
+
 
 using std::stof;
 using std::string;
@@ -176,11 +181,30 @@ long LinuxParser::IdleJiffies() {
   }
 }
 
-// TODO: Read and return CPU utilization
+// TODO: return an array of CpuUtiliztions
+// Return the array of jiffies for this process
+
 vector<string> LinuxParser::CpuUtilization() { 
-  vector<string> utilizations;
-  utilizations.push_back("0.5");
-  return utilizations;
+  std::vector<std::string> temp;
+  temp.push_back("a");
+  /*
+  // vector<string> 
+
+  long cached_active_ticks = ActiveJiffies(1); // needs to be an array
+  long cached_idle_ticks = IdleJiffies();
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  long active_ticks = ActiveJiffies();
+  long idle_ticks = IdleJiffies();
+  long duration_active{active_ticks - cached_active_ticks};
+  long duration_idle{idle_ticks - cached_idle_ticks};
+  long duration(duration_active + duration_idle);
+  float utilization = static_cast<float>(duration_active) / duration;
+  cpuUtilizations.push_back("0.5");
+  // This can be used to create the CPU utilization
+  // for all the pids
+
+  return cpuUtilizations;
+  */
 }
 
 int LinuxParser::TotalProcesses() { 
