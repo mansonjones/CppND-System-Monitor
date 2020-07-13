@@ -35,14 +35,14 @@ template <class Type> float CalculateUtilization(Type cpu) {
 
   if (delta < 1) {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    activeJiffies = cpu.ActvieJiffies();
+    activeJiffies = cpu.ActiveJiffies();
     idleJiffies = cpu.IdleJiffies();
     deltaActiveJiffies = activeJiffies - cpu.getCachedActiveJiffies();
     deltaIdleJiffies = idleJiffies - cpu.getCachedIdleJiffies();
     delta = deltaActiveJiffies + deltaIdleJiffies;
   }
   utilization = static_cast<float>(deltaActiveJiffies/delta);
-  cpu.setCahcedActiveJiffies(activeJiffies);
+  cpu.setCachedActiveJiffies(activeJiffies);
   cpu.setCachedIdleJiffies(idleJiffies);
   return utilization;
 }

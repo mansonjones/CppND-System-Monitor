@@ -18,9 +18,8 @@ Process::Process(int pid) : pid_{pid} {}
 int Process::Pid() const { return pid_; }
 
 // TODO: Return this process's CPU utilization
-float Process::CpuUtilization() const { 
-    // This will need the pid_
-    return 0; 
+float Process::CpuUtilization() const {
+    return CalculateUtilization<Process>(*this);
 }
 
 string Process::Command() const { 
