@@ -1,4 +1,3 @@
-/*
 #ifndef CPUMEASUREMENT_INCLUDE_H
 #define CPUMEASUREMENT_INCLUDE_H
 
@@ -19,4 +18,3 @@ protected:
 };
 
 #endif
-*/

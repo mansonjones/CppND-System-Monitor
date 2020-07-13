@@ -1,4 +1,3 @@
-/*
 #include "CPUMeasurement.h"
 #include "linux_parser.h"
 
@@ -29,4 +28,3 @@ void CPUMeasurement::setCachedIdleJiffies(long idleJiffies) {
 long CPUMeasurement::getCachedIdleJiffies() const {
     return cached_idle_jiffies_;
 }
-*/

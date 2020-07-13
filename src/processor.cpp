@@ -15,14 +15,13 @@ using std::vector;
 
 
 
-Processor::Processor() : 
-cached_active_ticks_(LinuxParser::ActiveJiffies()), 
-cached_idle_ticks_(LinuxParser::IdleJiffies()) {}
+Processor::Processor() {}
 
 // TODO: Return the aggregate CPU utilization
 float Processor::Utilization() { 
-    // return 0.4567;
+    return 0.4567;
     
+    /*
     float utilization{0};
     // Create delay.  
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -35,5 +34,9 @@ float Processor::Utilization() {
     cached_active_ticks_ = active_ticks;
     cached_idle_ticks_ = idle_ticks;
     return utilization;
+    */
+}
 
+long Processor::ActiveJiffies() const {
+    return LinuxParser::ActiveJiffies();
 }
