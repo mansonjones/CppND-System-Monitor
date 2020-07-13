@@ -12,7 +12,11 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-Process::Process(int pid) : pid_{pid} {}
+Process::Process(int pid) :
+ pid_(pid) {
+     setCachedActiveJiffies(LinuxParser::ActiveJiffies());
+     setCachedIdleJiffies(LinuxParser::IdleJiffies());
+ }
 
 int Process::Pid() const { return pid_; }
 

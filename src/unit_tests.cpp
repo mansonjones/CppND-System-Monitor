@@ -17,7 +17,7 @@ void UnitTests::testSystem() {
   cout << " RunningProcesses " << system.RunningProcesses() << endl;
   cout << " Kernel() " << system.Kernel() << endl;
   cout << " OperatingSystem() " << system.OperatingSystem() << endl;
-  cout << " process ids " <<endl;
+
   std::vector<Process> processes = system.Processes();
   cout << " cpu utilization " << system.Cpu().Utilization() << endl;
   cout << endl;
@@ -34,8 +34,15 @@ void UnitTests::testProcess(int pid) {
   cout << endl;
 }
 
-void UnitTests::testJiffies(int pid) {
-  cout << "*** Jiffie Tests ***" << endl;
+void UnitTests::testLinuxParser(int pid) {
+  cout << "*** LinuxParser Tests ***" << endl;
+  std::vector<int> pids = LinuxParser::Pids();
+  cout << "LinuxParser::Pids()" << endl;
+  cout << " number of pids " << pids.size() << std::endl;
+  for (int pid: pids) {
+    cout << pid << " ";
+  }
+  cout << endl;
   cout << "LinuxParser::Jiffies() " << LinuxParser::Jiffies() << endl;
   cout << "LinuxParser::ActiveJiffies(pid) " << LinuxParser::ActiveJiffies(pid) << endl;
   cout << "LinuxParser::ActiveJiffies() " << LinuxParser::ActiveJiffies() << endl;

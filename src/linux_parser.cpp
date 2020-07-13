@@ -187,6 +187,7 @@ long LinuxParser::IdleJiffies() {
 vector<string> LinuxParser::CpuUtilization() { 
   std::vector<std::string> temp;
   temp.push_back("a");
+  return temp;
   /*
   // vector<string> 
 

@@ -41,6 +41,7 @@ enum CPUStates {
   kGuest_,
   kGuestNice_
 };
+
 std::vector<std::string> CpuUtilization();
 long Jiffies();
 long ActiveJiffies();
@@ -49,25 +50,26 @@ long IdleJiffies();
 
 // Processes
 enum ProcessorStates {
-  kPid_ = 0,
-  kComm_,
-  kState_,
-  kPpid_,
-  kPrgp_,
-  kSession_,
-  kTty_nr_,
-  kTpgid_,
-  kFlags_,
-  kMinflt_,
-  kMajflt_,
-  kUtime_,
-  kStime_,
-  kCutime_,
-  kCstime_,
-  kPriority_,
-  kNice_,
-  kNum_threads_,
-}
+  kProcPid_ = 0,
+  kProcComm_,
+  kProcState_,
+  kProcPpid_,
+  kProcPrgp_,
+  kProcSession_,
+  kProcTty_nr_,
+  kProcTpgid_,
+  kProcFlags_,
+  kProcMinflt_,
+  kProcMajflt_,
+  kProcUtime_,
+  kProcStime_,
+  kProcCutime_,
+  kProcCstime_,
+  kProcPriority_,
+  kProcNice_,
+  kProcNum_threads_,
+};
+
 std::string Command(int pid);
 std::string Ram(int pid);
 std::string Uid(int pid);

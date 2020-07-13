@@ -15,7 +15,10 @@ using std::vector;
 
 
 
-Processor::Processor() {}
+Processor::Processor() {
+  setCachedActiveJiffies(LinuxParser::ActiveJiffies());
+  setCachedIdleJiffies(LinuxParser::IdleJiffies());
+}
 
 float Processor::Utilization() {
     return CalculateUtilization<Processor>(*this);
