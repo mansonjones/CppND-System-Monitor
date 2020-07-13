@@ -6,10 +6,12 @@
 #include <iostream>
 
 int main() {
-  // System system;
+  System system;
+  /*
   UnitTests::testSystem();
   UnitTests::testProcess(1);
   UnitTests::testLinuxParser(1);
   UnitTests::testProcessor();
-  // NCursesDisplay::Display(system);
+  */
+  NCursesDisplay::Display(system);
 }

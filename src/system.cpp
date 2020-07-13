@@ -16,14 +16,36 @@ using std::size_t;
 using std::string;
 using std::vector;
 
+
+
+System::System() : cpu_(Processor()) {}
+
 // TODO: Return the system's CPU
-Processor& System::Cpu() { return cpu_; }
+Processor& System::Cpu() { 
+    return cpu_; 
+}
 
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
-    /*
+    
     vector<int> pids{LinuxParser::Pids()};
-
+    // Update the current list of processes.
+    // Delete any processes that are in the list but are 
+    // not in /proc/[pid]
+    // Add any new processes. 
+    // It might be better to just clear the list and start over
+    processes_.clear();
+    for (int pid : pids) {
+        Process process = Process(pid);
+        processes_.push_back(process);
+    }
+    // Update CPU utilization
+    for (auto& process: processes_) {
+        process.CpuUtilization();
+    }
+    std::sort(processes_.begin(), processes_.end());
+    return processes_;
+    /*
     // Create a set
     set<int> extant_pids;
     for (Process const& process:  processes_) {
@@ -44,9 +66,6 @@ vector<Process>& System::Processes() {
 
     std::sort(processes_.begin(), processes_.end(), std::g
     */
-    Process process = Process(1);
-    processes_.push_back(process);
-    return processes_; 
 }
 
 std::string System::Kernel() const { 
