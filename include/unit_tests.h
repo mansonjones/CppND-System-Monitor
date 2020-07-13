@@ -9,6 +9,7 @@ namespace UnitTests {
 void testSystem();
 void testProcess(int pid); 
 void testJiffies(int pid);
+void testProcessor();
 
 }
 #endif

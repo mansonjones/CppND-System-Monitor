@@ -1,3 +1,4 @@
+
 #ifndef SYSTEM_PARSER_H
 #define SYSTEM_PARSER_H
 
@@ -47,6 +48,26 @@ long ActiveJiffies(int pid);
 long IdleJiffies();
 
 // Processes
+enum ProcessorStates {
+  kPid_ = 0,
+  kComm_,
+  kState_,
+  kPpid_,
+  kPrgp_,
+  kSession_,
+  kTty_nr_,
+  kTpgid_,
+  kFlags_,
+  kMinflt_,
+  kMajflt_,
+  kUtime_,
+  kStime_,
+  kCutime_,
+  kCstime_,
+  kPriority_,
+  kNice_,
+  kNum_threads_,
+}
 std::string Command(int pid);
 std::string Ram(int pid);
 std::string Uid(int pid);
