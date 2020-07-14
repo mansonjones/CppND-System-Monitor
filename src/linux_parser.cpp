@@ -16,6 +16,80 @@ using std::string;
 using std::to_string;
 using std::vector;
 
+const string LinuxParserNew::kProcDirectoryNew{"/proc"};
+const string LinuxParserNew::kCmdlineFilenameNew{"/cmdline"};
+const string LinuxParserNew::kCpuinfoFilenameNew{"/cpuinfo"};
+const string LinuxParserNew::kStatusFilenameNew{"/status"};
+const string LinuxParserNew::kStatFilenameNew{"/stat"};
+const string LinuxParserNew::kUptimeFilenameNew{"/uptime"};
+const string LinuxParserNew::kMeminfoFilenameNew{"/meminfo"};
+const string LinuxParserNew::kVersionFilenameNew{"/version"};
+const string LinuxParserNew::kOSPathNew{"/etc/os-release"};
+const string LinuxParserNew::kPasswordPathNew{"/etc/passwd"};
+
+float LinuxParserNew::MemoryUtilization() { 
+  return 1.234; 
+}
+
+long LinuxParserNew::UpTime() {
+  return 123;
+}
+
+int LinuxParserNew::TotalProcesses() {
+   return 234;
+}
+
+int LinuxParserNew::RunningProcesses() {
+  return 345;
+}
+
+std::string LinuxParserNew::OperatingSystem() {
+  return std::string("abc");
+}
+
+std::string LinuxParserNew::Kernel() {
+  return std::string("bcd");
+}
+
+long LinuxParserNew::Jiffies() {
+  return 456;
+}
+
+long LinuxParserNew::ActiveJiffies() {
+  return 567;
+}
+
+long LinuxParserNew::ActiveJiffies(int pid) {
+  return 678;
+}
+
+long LinuxParserNew::IdleJiffies() {
+  return 789;
+}
+
+// Processes
+std::string LinuxParserNew::Command(int pid) {
+  return std::string("command");
+}
+
+std::string LinuxParserNew::Ram(int pid) {
+  return std::string("ram");
+}
+
+
+// This can eventually be made private
+std::string LinuxParserNew::Uid(int pid) {
+  return std::string("Uid");
+}
+
+std::string LinuxParserNew::User(int pid) {
+  return std::string("new");
+}
+
+long int LinuxParserNew::UpTime(int pid) {
+  return 123;
+}
+
 string LinuxParser::OperatingSystem() {
   string lineBuffer;
   string key, value;

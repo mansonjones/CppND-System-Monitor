@@ -6,6 +6,42 @@
 #include <regex>
 #include <string>
 
+class LinuxParserNew {
+public:
+// Paths
+  static const std::string kProcDirectoryNew;
+  static const std::string kCmdlineFilenameNew;
+  static const std::string kCpuinfoFilenameNew;
+  static const std::string kStatusFilenameNew;
+  static const std::string kStatFilenameNew;
+  static const std::string kUptimeFilenameNew;
+  static const std::string kMeminfoFilenameNew;
+  static const std::string kVersionFilenameNew;
+  static const std::string kOSPathNew;
+  static const std::string kPasswordPathNew;
+
+  // System
+  static float MemoryUtilization();
+  static long UpTime();
+  static int TotalProcesses();
+  static int RunningProcesses();
+  static std::string OperatingSystem();
+  static std::string Kernel();
+
+  
+  static long Jiffies();
+  static long ActiveJiffies();
+  static long ActiveJiffies(int pid);
+  static long IdleJiffies();
+
+  // Processes
+  static std::string Command(int pid);
+  static std::string Ram(int pid);
+  static std::string Uid(int pid);
+  static std::string User(int pid);
+  static long int UpTime(int pid);
+};
+
 namespace LinuxParser {
 // Paths
 const std::string kProcDirectory{"/proc/"};
