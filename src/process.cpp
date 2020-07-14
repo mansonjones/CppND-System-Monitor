@@ -25,23 +25,23 @@ float Process::CpuUtilization() const {
 }
 
 string Process::Command() const { 
-    return LinuxParser::Command(pid_); 
+    return LinuxParserNew::Command(pid_); 
 }
 
 string Process::Ram() const { 
-    return LinuxParser::Ram(pid_); 
+    return LinuxParserNew::Ram(pid_); 
 }
 
 string Process::User() const { 
-    return LinuxParser::User(pid_); 
+    return LinuxParserNew::User(pid_); 
 }
 
 long int Process::UpTime() const { 
-    return LinuxParser::UpTime(pid_); 
+    return LinuxParserNew::UpTime(pid_); 
 }
 
 long Process::ActiveJiffies() const {
-    return LinuxParser::ActiveJiffies(pid_);
+    return LinuxParserNew::ActiveJiffies(pid_);
 }
 
 bool Process::operator<(Process const& a) const { 

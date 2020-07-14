@@ -35,6 +35,10 @@ void UnitTests::testProcess(int pid) {
 }
 
 void UnitTests::testLinuxParser(int pid) {
+
+  cout << " ***** LinuxParserNew" << endl;
+  cout << "MemoryUtilization " << LinuxParserNew::MemoryUtilization() << std::endl;
+  cout << "UpTime() " << LinuxParserNew::UpTime() << std::endl;
   cout << "*** LinuxParser Tests ***" << endl;
   std::vector<int> pids = LinuxParser::Pids();
   cout << "LinuxParser::Pids()" << endl;

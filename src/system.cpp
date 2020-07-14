@@ -69,25 +69,25 @@ vector<Process>& System::Processes() {
 }
 
 std::string System::Kernel() const { 
-    return LinuxParser::Kernel(); 
+    return LinuxParserNew::Kernel(); 
 }
 
 float System::MemoryUtilization() const { 
-    return LinuxParser::MemoryUtilization(); 
+    return LinuxParserNew::MemoryUtilization(); 
 }
 
 std::string System::OperatingSystem() const { 
-    return LinuxParser::OperatingSystem(); 
+    return LinuxParserNew::OperatingSystem(); 
 }
 
 int System::RunningProcesses() const { 
-    return LinuxParser::RunningProcesses(); 
+    return LinuxParserNew::RunningProcesses(); 
 }
 
 int System::TotalProcesses() const { 
-    return LinuxParser::TotalProcesses(); 
+    return LinuxParserNew::TotalProcesses(); 
 }
 
 long int System::UpTime() const { 
-    return LinuxParser::UpTime(); 
+    return LinuxParserNew::UpTime(); 
 }
