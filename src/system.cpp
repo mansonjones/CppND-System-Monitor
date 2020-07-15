@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include <iostream> // remove after debugging is done
+
 #include "process.h"
 #include "processor.h"
 #include "system.h"
@@ -15,7 +17,6 @@ using std::set;
 using std::size_t;
 using std::string;
 using std::vector;
-
 
 
 System::System() : cpu_(Processor()) {}
@@ -34,16 +35,18 @@ vector<Process>& System::Processes() {
     // not in /proc/[pid]
     // Add any new processes. 
     // It might be better to just clear the list and start over
-    processes_.clear();
+    
+    
     for (int pid : pids) {
         Process process = Process(pid);
-        processes_.push_back(process);
+        processes_.emplace_back(process);
     }
+    
     // Update CPU utilization
-    for (auto& process: processes_) {
-        process.CpuUtilization();
-    }
-    std::sort(processes_.begin(), processes_.end());
+    //for (auto& process: processes_) {
+    //    process.CpuUtilization();
+    // }
+    // std::sort(processes_.begin(), processes_.end());
     return processes_;
     /*
     // Create a set
@@ -69,25 +72,25 @@ vector<Process>& System::Processes() {
 }
 
 std::string System::Kernel() const { 
-    return LinuxParserNew::Kernel(); 
+    return LinuxParser::Kernel(); 
 }
 
 float System::MemoryUtilization() const { 
-    return LinuxParserNew::MemoryUtilization(); 
+    return LinuxParser::MemoryUtilization(); 
 }
 
 std::string System::OperatingSystem() const { 
-    return LinuxParserNew::OperatingSystem(); 
+    return LinuxParser::OperatingSystem(); 
 }
 
 int System::RunningProcesses() const { 
-    return LinuxParserNew::RunningProcesses(); 
+    return LinuxParser::RunningProcesses(); 
 }
 
 int System::TotalProcesses() const { 
-    return LinuxParserNew::TotalProcesses(); 
+    return LinuxParser::TotalProcesses(); 
 }
 
 long int System::UpTime() const { 
-    return LinuxParserNew::UpTime(); 
+    return LinuxParser::UpTime(); 
 }

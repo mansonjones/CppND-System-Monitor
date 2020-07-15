@@ -11,6 +11,10 @@ using std::endl;
 void UnitTests::testSystem() {
   System system;
   cout << "*** System Tests ***" << std::endl;
+  cout << " Cpu().Utilization() " << system.Cpu().Utilization() << endl;
+  cout<< " Processes() " << endl;
+  std::vector<Process> processes = system.Processes();
+  cout << "the number of processes is: " << processes.size() << endl;
   cout << " MemoryUtilization " << system.MemoryUtilization() << endl;
   cout << " UpTime() " << system.UpTime() << endl;
   cout << " TotalProcesses " << system.TotalProcesses() << endl;
@@ -18,7 +22,8 @@ void UnitTests::testSystem() {
   cout << " Kernel() " << system.Kernel() << endl;
   cout << " OperatingSystem() " << system.OperatingSystem() << endl;
 
-  std::vector<Process> processes = system.Processes();
+  // std::vector<Process> processes = system.Processes();
+  // This is causing a core dump.
   cout << " cpu utilization " << system.Cpu().Utilization() << endl;
   cout << endl;
 }
@@ -36,9 +41,9 @@ void UnitTests::testProcess(int pid) {
 
 void UnitTests::testLinuxParser(int pid) {
 
-  cout << " ***** LinuxParserNew" << endl;
-  cout << "MemoryUtilization " << LinuxParserNew::MemoryUtilization() << std::endl;
-  cout << "UpTime() " << LinuxParserNew::UpTime() << std::endl;
+  cout << " ***** LinuxParser" << endl;
+  cout << "MemoryUtilization " << LinuxParser::MemoryUtilization() << std::endl;
+  cout << "UpTime() " << LinuxParser::UpTime() << std::endl;
   cout << "*** LinuxParser Tests ***" << endl;
   std::vector<int> pids = LinuxParser::Pids();
   cout << "LinuxParser::Pids()" << endl;
@@ -48,7 +53,7 @@ void UnitTests::testLinuxParser(int pid) {
   }
   cout << endl;
   cout << "LinuxParser::Jiffies() " << LinuxParser::Jiffies() << endl;
-  cout << "LinuxParser::ActiveJiffies(pid) " << LinuxParser::ActiveJiffies(pid) << endl;
+  // cout << "LinuxParser::ActiveJiffies(pid) " << LinuxParser::ActiveJiffies(pid) << endl;
   cout << "LinuxParser::ActiveJiffies() " << LinuxParser::ActiveJiffies() << endl;
   cout << "LinuxParser::IdleJiffies() " << LinuxParser::IdleJiffies() << endl;
   cout << endl;

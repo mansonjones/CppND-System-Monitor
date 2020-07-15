@@ -16,19 +16,19 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-const string LinuxParserNew::kProcDirectoryNew{"/proc"};
-const string LinuxParserNew::kCmdlineFilenameNew{"/cmdline"};
-const string LinuxParserNew::kCpuinfoFilenameNew{"/cpuinfo"};
-const string LinuxParserNew::kStatusFilenameNew{"/status"};
-const string LinuxParserNew::kStatFilenameNew{"/stat"};
-const string LinuxParserNew::kUptimeFilenameNew{"/uptime"};
-const string LinuxParserNew::kMeminfoFilenameNew{"/meminfo"};
-const string LinuxParserNew::kVersionFilenameNew{"/version"};
-const string LinuxParserNew::kOSPathNew{"/etc/os-release"};
-const string LinuxParserNew::kPasswordPathNew{"/etc/passwd"};
+const string LinuxParser::kProcDirectoryNew{"/proc/"};
+const string LinuxParser::kCmdlineFilenameNew{"/cmdline"};
+const string LinuxParser::kCpuinfoFilenameNew{"/cpuinfo"};
+const string LinuxParser::kStatusFilenameNew{"/status"};
+const string LinuxParser::kStatFilenameNew{"/stat"};
+const string LinuxParser::kUptimeFilenameNew{"/uptime"};
+const string LinuxParser::kMeminfoFilenameNew{"/meminfo"};
+const string LinuxParser::kVersionFilenameNew{"/version"};
+const string LinuxParser::kOSPathNew{"/etc/os-release"};
+const string LinuxParser::kPasswordPathNew{"/etc/passwd"};
 
 // BONUS: Update this to use std::filesystem
-vector<int> LinuxParserNew::Pids() {
+vector<int> LinuxParser::Pids() {
   vector<int> pids;
   DIR* directory = opendir(kProcDirectoryNew.c_str());
   struct dirent* file;
@@ -46,7 +46,7 @@ vector<int> LinuxParserNew::Pids() {
   closedir(directory);
   return pids;
 }
-float LinuxParserNew::MemoryUtilization() { 
+float LinuxParser::MemoryUtilization() { 
     string lineBuffer;
   string key, value;
   float memTotal = 1.0;
@@ -69,7 +69,7 @@ float LinuxParserNew::MemoryUtilization() {
   return (memTotal - memFree) / memTotal;
 }
 
-long LinuxParserNew::UpTime() {
+long LinuxParser::UpTime() {
   string uptime1, uptime2;
   string lineBuffer;
   std::ifstream stream(kProcDirectoryNew + kUptimeFilenameNew);
@@ -82,7 +82,7 @@ long LinuxParserNew::UpTime() {
   return 0;
 }
 
-int LinuxParserNew::TotalProcesses() {
+int LinuxParser::TotalProcesses() {
   string key, value;
   string lineBuffer;
   std::ifstream stream(kProcDirectoryNew + kStatFilenameNew);
@@ -98,7 +98,7 @@ int LinuxParserNew::TotalProcesses() {
   return 0; 
 }
 
-int LinuxParserNew::RunningProcesses() {
+int LinuxParser::RunningProcesses() {
   string key, value;
   string lineBuffer;
   std::ifstream stream(kProcDirectoryNew + kStatFilenameNew);
@@ -114,7 +114,7 @@ int LinuxParserNew::RunningProcesses() {
   return 0;
 }
 
-std::string LinuxParserNew::OperatingSystem() {
+std::string LinuxParser::OperatingSystem() {
   string lineBuffer;
   string key, value;
   std::ifstream filestream(kOSPathNew);
@@ -135,7 +135,7 @@ std::string LinuxParserNew::OperatingSystem() {
   return value;
 }
 
-std::string LinuxParserNew::Kernel() {
+std::string LinuxParser::Kernel() {
     string os, version, kernel;
   string lineBuffer;
   std::ifstream stream(kProcDirectoryNew + kVersionFilenameNew);
@@ -147,16 +147,39 @@ std::string LinuxParserNew::Kernel() {
   return kernel;
 }
 
-long LinuxParserNew::Jiffies() {
-  return 456;
+long LinuxParser::Jiffies() {
+  return ActiveJiffies() + IdleJiffies();
 }
 
-long LinuxParserNew::ActiveJiffies() {
-  return 567;
+long LinuxParser::ActiveJiffies() {
+  string lineBuffer;
+  std::string fileName{kProcDirectoryNew + kStatFilenameNew};
+  std::ifstream fileStream(fileName);
+  if (fileStream.is_open()) {
+    while (std::getline(fileStream, lineBuffer)) {
+      std::istringstream lineStream(lineBuffer);
+      std::vector<std::string> jiffies;
+      for (std::string jiffie; lineStream >> jiffie;) {
+        jiffies.push_back(jiffie);
+      }
+      long activeJiffies = 0;
+      if (jiffies[0] == "cpu") {
+        long activeJiffies = 
+          atol(jiffies[kUser_].c_str()) + 
+          atol(jiffies[kNice_].c_str()) + 
+          atol(jiffies[kSystem_].c_str()) + 
+          atol(jiffies[kIRQ_].c_str()) + 
+          atol(jiffies[kSoftIRQ_].c_str()) + 
+          atol(jiffies[kSteal_].c_str());
+       return activeJiffies;
+      }
+    }
+  }
+  return 0;
 }
 
-long LinuxParserNew::ActiveJiffies(int pid) {
-    string token;
+long LinuxParser::ActiveJiffies(int pid) {
+  string token;
   std::string fileName{kProcDirectoryNew + std::to_string(pid) + kStatFilenameNew};
   std::ifstream fileStream(fileName);
   std::vector<std::string> tokens;
@@ -171,15 +194,30 @@ long LinuxParserNew::ActiveJiffies(int pid) {
   long val3 = atol(tokens[15].c_str());
 
   return val1 + val2 + val3;
-  return 678;
 }
 
-long LinuxParserNew::IdleJiffies() {
-  return 789;
+long LinuxParser::IdleJiffies() {
+  string lineBuffer;
+  std::string fileName{kProcDirectoryNew + kStatFilenameNew};
+  std::ifstream fileStream(fileName);
+  if (fileStream.is_open()) {
+    while (std::getline(fileStream, lineBuffer)) {
+      std::istringstream lineStream(lineBuffer);
+      std::vector<std::string> jiffies;
+      for (std::string jiffie; lineStream >> jiffie;) {
+        jiffies.push_back(jiffie);
+      }
+      if (jiffies[0] == "cpu") {
+        long idleJiffies = atol(jiffies[LinuxParser::kIdle_].c_str()) + 
+                           atol(jiffies[LinuxParser::kIOwait_].c_str());
+       return idleJiffies;
+      }
+    }
+  }
 }
 
 // Processes
-std::string LinuxParserNew::Command(int pid) {
+std::string LinuxParser::Command(int pid) {
     string command;
   string lineBuffer;
   std::string fileName{kProcDirectoryNew + std::to_string(pid) + kCmdlineFilenameNew};
@@ -191,8 +229,8 @@ std::string LinuxParserNew::Command(int pid) {
   return string(); 
 }
 
-std::string LinuxParserNew::Ram(int pid) {
-    string key, value;
+std::string LinuxParser::Ram(int pid) {
+  string key, value;
   string lineBuffer;
   std::string fileName{kProcDirectoryNew + std::to_string(pid) + kStatusFilenameNew};
   std::ifstream filestream(fileName);
@@ -212,7 +250,7 @@ std::string LinuxParserNew::Ram(int pid) {
 
 
 // This can eventually be made private
-std::string LinuxParserNew::Uid(int pid) {
+std::string LinuxParser::Uid(int pid) {
   string key, value;
   string lineBuffer;
   std::string fileName{kProcDirectoryNew + std::to_string(pid) + kStatusFilenameNew};
@@ -230,7 +268,7 @@ std::string LinuxParserNew::Uid(int pid) {
   return string();
 }
 
-std::string LinuxParserNew::User(int pid) {
+std::string LinuxParser::User(int pid) {
   string token;
   std::string fileName{kPasswordPathNew};
   std::ifstream filestream(fileName);
@@ -249,7 +287,7 @@ std::string LinuxParserNew::User(int pid) {
   return string(); 
 }
 
-long int LinuxParserNew::UpTime(int pid) {
+long int LinuxParser::UpTime(int pid) {
   string uptime1, uptime2;
   string lineBuffer;
   std::string fileName{kProcDirectoryNew + std::to_string(pid) + kUptimeFilenameNew};
@@ -263,127 +301,3 @@ long int LinuxParserNew::UpTime(int pid) {
   return 0;
 }
 
-// BONUS: Update this to use std::filesystem
-vector<int> LinuxParser::Pids() {
-  vector<int> pids;
-  DIR* directory = opendir(kProcDirectory.c_str());
-  struct dirent* file;
-  while ((file = readdir(directory)) != nullptr) {
-    // Is this a directory?
-    if (file->d_type == DT_DIR) {
-      // Is every character of the name a digit?
-      string filename(file->d_name);
-      if (std::all_of(filename.begin(), filename.end(), isdigit)) {
-        int pid = stoi(filename);
-        pids.push_back(pid);
-      }
-    }
-  }
-  closedir(directory);
-  return pids;
-}
-
-
-
-// Total number of ticks since the last boot.
-// The second term is the number of ticks per second,
-// typicall 100
-
-long LinuxParser::Jiffies() { 
-  return 100; // UpTime() * sysconf(_SC_CLK_TCK);  
-}
-
-// TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-
-long LinuxParser::ActiveJiffies(int pid) { 
-  string token;
-  std::string fileName{kProcDirectory + std::to_string(pid) + kStatFilename};
-  
-  std::ifstream fileStream(fileName);
-  std::vector<std::string> tokens;
-  const char delimiter = ' ';
-  if (fileStream.is_open()) {
-    while (std::getline(fileStream, token, delimiter)) {
-      tokens.push_back(token);
-    }
-  }
-  long val1 = atol(tokens[13].c_str());
-  long val2 = atol(tokens[14].c_str());
-  long val3 = atol(tokens[15].c_str());
-
-  return val1 + val2 + val3;
-}
-
-// Sum all of the jiffies for the cpu
-long LinuxParser::ActiveJiffies() { 
-  string lineBuffer;
-  std::string fileName{kProcDirectory + kStatFilename};
-  std::ifstream fileStream(fileName);
-  if (fileStream.is_open()) {
-    while (std::getline(fileStream, lineBuffer)) {
-      std::istringstream lineStream(lineBuffer);
-      std::vector<std::string> jiffies;
-      for (std::string jiffie; lineStream >> jiffie;) {
-        jiffies.push_back(jiffie);
-      }
-      if (jiffies[0] == "cpu") {
-        long activeJiffies = 0;
-        for (unsigned int i = 1; i < jiffies.size(); ++i) {
-          activeJiffies += atol(jiffies[i].c_str());
-        }  
-       return activeJiffies;
-      }
-    }
-  }
-  return 0; 
-}
-
-// TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { 
-  string lineBuffer;
-  std::string fileName{kProcDirectory + kStatFilename};
-  std::ifstream fileStream(fileName);
-  if (fileStream.is_open()) {
-    while (std::getline(fileStream, lineBuffer)) {
-      std::istringstream lineStream(lineBuffer);
-      std::vector<std::string> jiffies;
-      for (std::string jiffie; lineStream >> jiffie;) {
-        jiffies.push_back(jiffie);
-      }
-      if (jiffies[0] == "cpu") {
-        long idleJiffies = atol(jiffies[LinuxParser::kIdle_].c_str()) + 
-                           atol(jiffies[LinuxParser::kIOwait_].c_str());
-       return idleJiffies;
-      }
-    }
-  }
-}
-
-// TODO: return an array of CpuUtiliztions
-// Return the array of jiffies for this process
-
-vector<string> LinuxParser::CpuUtilization() { 
-  std::vector<std::string> temp;
-  temp.push_back("a");
-  return temp;
-  /*
-  // vector<string> 
-
-  long cached_active_ticks = ActiveJiffies(1); // needs to be an array
-  long cached_idle_ticks = IdleJiffies();
-  std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  long active_ticks = ActiveJiffies();
-  long idle_ticks = IdleJiffies();
-  long duration_active{active_ticks - cached_active_ticks};
-  long duration_idle{idle_ticks - cached_idle_ticks};
-  long duration(duration_active + duration_idle);
-  float utilization = static_cast<float>(duration_active) / duration;
-  cpuUtilizations.push_back("0.5");
-  // This can be used to create the CPU utilization
-  // for all the pids
-
-  return cpuUtilizations;
-  */
-}
- 

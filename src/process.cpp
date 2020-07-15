@@ -14,8 +14,12 @@ using std::vector;
 
 Process::Process(int pid) :
  pid_(pid) {
-     setCachedActiveJiffies(LinuxParser::ActiveJiffies());
+    // setCachedActiveJiffies(1);
+    // setCachedIdleJiffies(1);
+     /*
+     setCachedActiveJiffies(LinuxParser::ActiveJiffies(pid));
      setCachedIdleJiffies(LinuxParser::IdleJiffies());
+     */
  }
 
 int Process::Pid() const { return pid_; }
@@ -25,23 +29,23 @@ float Process::CpuUtilization() const {
 }
 
 string Process::Command() const { 
-    return LinuxParserNew::Command(pid_); 
+    return LinuxParser::Command(pid_); 
 }
 
 string Process::Ram() const { 
-    return LinuxParserNew::Ram(pid_); 
+    return LinuxParser::Ram(pid_); 
 }
 
 string Process::User() const { 
-    return LinuxParserNew::User(pid_); 
+    return LinuxParser::User(pid_); 
 }
 
 long int Process::UpTime() const { 
-    return LinuxParserNew::UpTime(pid_); 
+    return LinuxParser::UpTime(pid_); 
 }
 
 long Process::ActiveJiffies() const {
-    return LinuxParserNew::ActiveJiffies(pid_);
+    return LinuxParser::ActiveJiffies(pid_);
 }
 
 bool Process::operator<(Process const& a) const { 

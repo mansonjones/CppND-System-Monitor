@@ -21,7 +21,8 @@ Processor::Processor() {
 }
 
 float Processor::Utilization() {
-    return CalculateUtilization<Processor>(*this);
+  // return 4.321;
+  return CalculateUtilization<Processor>(*this);
 }
 
 long Processor::ActiveJiffies() const {
