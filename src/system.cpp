@@ -13,6 +13,7 @@
 #include "linux_parser.h"
 
 
+
 using std::set;
 using std::size_t;
 using std::string;
@@ -21,7 +22,6 @@ using std::vector;
 
 System::System() : cpu_(Processor()) {}
 
-// TODO: Return the system's CPU
 Processor& System::Cpu() { 
     return cpu_; 
 }
@@ -36,20 +36,31 @@ vector<Process>& System::Processes() {
     // Add any new processes. 
     // It might be better to just clear the list and start over
     
-    processes_.clear();
+    // Create a set of pids
+    set<int> existing_pids;
+    for (Process const& process: processes_) {
+        existing_pids.insert(process.Pid());
+    }
+
+    // If the process is not already in the list of processes,
+    // then add it.  Note that emplace_back avoids having 
+    // to call the Process constructor explicitly
     for (int pid : pids) {
-        Process process = Process(pid);
-        processes_.emplace_back(process);
+        if (existing_pids.find(pid) == existing_pids.end()) {
+            processes_.emplace_back(pid);
+          // processes_.push_back(Process(pid));
+        }
     }
     
-    // Update CPU utilization
+    // Update all processes
+    
     for (auto& process: processes_) {
-        process.CpuUtilization();
-        process.Ram();
+        process.update();
     }
-    std::sort(processes_.begin(), processes_.end());
+    
+    std::sort(processes_.begin(), processes_.end(), std::greater<Process>());
     return processes_;
-    /*
+    /* Here is his code from the demo
     // Create a set
     set<int> extant_pids;
     for (Process const& process:  processes_) {
@@ -64,11 +75,10 @@ vector<Process>& System::Processes() {
 
     // Update CPU utiliztion
     for (auto& process : processes) {
-        process.CpuUtilization(LinuxParser::ActiveJiffies(process))
+        process.CpuUtilization(LinuxParser::ActiveJiffies(process.Pid()))
         LinuxParser::Jiffies());
     }
 
-    std::sort(processes_.begin(), processes_.end(), std::g
     */
 }
 

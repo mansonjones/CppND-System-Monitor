@@ -1,0 +1,133 @@
+mkdir -p build
+cd build && \
+cmake .. && \
+make
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/workspace/CppND-System-Monitor/build
+make[1]: Entering directory '/home/workspace/CppND-System-Monitor/build'
+make[2]: Entering directory '/home/workspace/CppND-System-Monitor/build'
+make[3]: Entering directory '/home/workspace/CppND-System-Monitor/build'
+make[3]: Leaving directory '/home/workspace/CppND-System-Monitor/build'
+make[3]: Entering directory '/home/workspace/CppND-System-Monitor/build'
+[ 10%] Building CXX object CMakeFiles/monitor.dir/src/process.cpp.o
+/home/workspace/CppND-System-Monitor/src/process.cpp: In member function 'std::__cxx11::string Process::Command() const':
+/home/workspace/CppND-System-Monitor/src/process.cpp:32:41: error: no match for 'operator=' (operand types are 'const string {aka const std::__cxx11::basic_string<char>}' and 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}')
+     command_ = LinuxParser::Command(pid_);
+                                         ^
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/bits/locale_classes.h:40,
+                 from /usr/include/c++/7/bits/ios_base.h:41,
+                 from /usr/include/c++/7/ios:42,
+                 from /usr/include/c++/7/istream:38,
+                 from /usr/include/c++/7/sstream:38,
+                 from /home/workspace/CppND-System-Monitor/src/process.cpp:3:
+/usr/include/c++/7/bits/basic_string.h:654:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:654:7: note:   passing 'const string* {aka const std::__cxx11::basic_string<char>*}' as 'this' argument discards qualifiers
+/usr/include/c++/7/bits/basic_string.h:722:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:722:7: note:   passing 'const string* {aka const std::__cxx11::basic_string<char>*}' as 'this' argument discards qualifiers
+/usr/include/c++/7/bits/basic_string.h:693:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(const _CharT* __s)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:693:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'const char*'
+/usr/include/c++/7/bits/basic_string.h:704:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(_CharT __c)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:704:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'char'
+/usr/include/c++/7/bits/basic_string.h:785:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(std::initializer_list<_Tp>) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(initializer_list<_CharT> __l)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:785:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'std::initializer_list<char>'
+/usr/include/c++/7/bits/basic_string.h:799:8: note: candidate: template<class _Tp> std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_If_sv<_Tp, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&> std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const _Tp&) [with _Tp = _Tp; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+        operator=(const _Tp& __svt)
+        ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:799:8: note:   template argument deduction/substitution failed:
+/home/workspace/CppND-System-Monitor/src/process.cpp: In member function 'std::__cxx11::string Process::Ram() const':
+/home/workspace/CppND-System-Monitor/src/process.cpp:37:33: error: no match for 'operator=' (operand types are 'const string {aka const std::__cxx11::basic_string<char>}' and 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}')
+     ram_ = LinuxParser::Ram(pid_);
+                                 ^
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/bits/locale_classes.h:40,
+                 from /usr/include/c++/7/bits/ios_base.h:41,
+                 from /usr/include/c++/7/ios:42,
+                 from /usr/include/c++/7/istream:38,
+                 from /usr/include/c++/7/sstream:38,
+                 from /home/workspace/CppND-System-Monitor/src/process.cpp:3:
+/usr/include/c++/7/bits/basic_string.h:654:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:654:7: note:   passing 'const string* {aka const std::__cxx11::basic_string<char>*}' as 'this' argument discards qualifiers
+/usr/include/c++/7/bits/basic_string.h:722:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:722:7: note:   passing 'const string* {aka const std::__cxx11::basic_string<char>*}' as 'this' argument discards qualifiers
+/usr/include/c++/7/bits/basic_string.h:693:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(const _CharT* __s)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:693:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'const char*'
+/usr/include/c++/7/bits/basic_string.h:704:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(_CharT __c)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:704:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'char'
+/usr/include/c++/7/bits/basic_string.h:785:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(std::initializer_list<_Tp>) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(initializer_list<_CharT> __l)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:785:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'std::initializer_list<char>'
+/usr/include/c++/7/bits/basic_string.h:799:8: note: candidate: template<class _Tp> std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_If_sv<_Tp, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&> std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const _Tp&) [with _Tp = _Tp; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+        operator=(const _Tp& __svt)
+        ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:799:8: note:   template argument deduction/substitution failed:
+/home/workspace/CppND-System-Monitor/src/process.cpp: In member function 'std::__cxx11::string Process::User() const':
+/home/workspace/CppND-System-Monitor/src/process.cpp:42:35: error: no match for 'operator=' (operand types are 'const string {aka const std::__cxx11::basic_string<char>}' and 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}')
+     user_ = LinuxParser::User(pid_);
+                                   ^
+In file included from /usr/include/c++/7/string:52:0,
+                 from /usr/include/c++/7/bits/locale_classes.h:40,
+                 from /usr/include/c++/7/bits/ios_base.h:41,
+                 from /usr/include/c++/7/ios:42,
+                 from /usr/include/c++/7/istream:38,
+                 from /usr/include/c++/7/sstream:38,
+                 from /home/workspace/CppND-System-Monitor/src/process.cpp:3:
+/usr/include/c++/7/bits/basic_string.h:654:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:654:7: note:   passing 'const string* {aka const std::__cxx11::basic_string<char>*}' as 'this' argument discards qualifiers
+/usr/include/c++/7/bits/basic_string.h:722:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:722:7: note:   passing 'const string* {aka const std::__cxx11::basic_string<char>*}' as 'this' argument discards qualifiers
+/usr/include/c++/7/bits/basic_string.h:693:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(const _CharT* __s)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:693:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'const char*'
+/usr/include/c++/7/bits/basic_string.h:704:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(_CharT __c)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:704:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'char'
+/usr/include/c++/7/bits/basic_string.h:785:7: note: candidate: std::__cxx11::basic_string<_CharT, _Traits, _Alloc>& std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(std::initializer_list<_Tp>) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+       operator=(initializer_list<_CharT> __l)
+       ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:785:7: note:   no known conversion for argument 1 from 'std::__cxx11::string {aka std::__cxx11::basic_string<char>}' to 'std::initializer_list<char>'
+/usr/include/c++/7/bits/basic_string.h:799:8: note: candidate: template<class _Tp> std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::_If_sv<_Tp, std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&> std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::operator=(const _Tp&) [with _Tp = _Tp; _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]
+        operator=(const _Tp& __svt)
+        ^~~~~~~~
+/usr/include/c++/7/bits/basic_string.h:799:8: note:   template argument deduction/substitution failed:
+/home/workspace/CppND-System-Monitor/src/process.cpp: In member function 'long int Process::UpTime() const':
+/home/workspace/CppND-System-Monitor/src/process.cpp:47:39: error: assignment of member 'Process::uptime_' in read-only object
+     uptime_ = LinuxParser::UpTime(pid_);
+                                       ^
+CMakeFiles/monitor.dir/build.make:127: recipe for target 'CMakeFiles/monitor.dir/src/process.cpp.o' failed
+make[3]: *** [CMakeFiles/monitor.dir/src/process.cpp.o] Error 1
+make[3]: Leaving directory '/home/workspace/CppND-System-Monitor/build'
+CMakeFiles/Makefile2:72: recipe for target 'CMakeFiles/monitor.dir/all' failed
+make[2]: *** [CMakeFiles/monitor.dir/all] Error 2
+make[2]: Leaving directory '/home/workspace/CppND-System-Monitor/build'
+Makefile:83: recipe for target 'all' failed
+make[1]: *** [all] Error 2
+make[1]: Leaving directory '/home/workspace/CppND-System-Monitor/build'
+Makefile:10: recipe for target 'build' failed
+make: *** [build] Error 2

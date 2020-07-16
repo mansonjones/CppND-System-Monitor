@@ -20,10 +20,19 @@ class Process : public Utilization {
   std::string Ram() const;    
   long int UpTime() const;           
   bool operator<(Process const& a) const; 
+  bool operator>(Process const& a) const; 
+  
+  void update();
 
   long ActiveJiffies() const;
  private:
    int pid_;
+   std::string user_;
+   std::string command_;
+   float cpuUtilization_;
+   std::string ram_;
+   long int uptime_;
+
 };
 
 #endif
