@@ -36,17 +36,18 @@ vector<Process>& System::Processes() {
     // Add any new processes. 
     // It might be better to just clear the list and start over
     
-    
+    processes_.clear();
     for (int pid : pids) {
         Process process = Process(pid);
         processes_.emplace_back(process);
     }
     
     // Update CPU utilization
-    //for (auto& process: processes_) {
-    //    process.CpuUtilization();
-    // }
-    // std::sort(processes_.begin(), processes_.end());
+    for (auto& process: processes_) {
+        process.CpuUtilization();
+        process.Ram();
+    }
+    std::sort(processes_.begin(), processes_.end());
     return processes_;
     /*
     // Create a set

@@ -16,21 +16,21 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-const string LinuxParser::kProcDirectoryNew{"/proc/"};
-const string LinuxParser::kCmdlineFilenameNew{"/cmdline"};
-const string LinuxParser::kCpuinfoFilenameNew{"/cpuinfo"};
-const string LinuxParser::kStatusFilenameNew{"/status"};
-const string LinuxParser::kStatFilenameNew{"/stat"};
-const string LinuxParser::kUptimeFilenameNew{"/uptime"};
-const string LinuxParser::kMeminfoFilenameNew{"/meminfo"};
-const string LinuxParser::kVersionFilenameNew{"/version"};
-const string LinuxParser::kOSPathNew{"/etc/os-release"};
-const string LinuxParser::kPasswordPathNew{"/etc/passwd"};
+const string LinuxParser::kProcDirectory{"/proc/"};
+const string LinuxParser::kCmdlineFilename{"/cmdline"};
+const string LinuxParser::kCpuinfoFilename{"/cpuinfo"};
+const string LinuxParser::kStatusFilename{"/status"};
+const string LinuxParser::kStatFilename{"/stat"};
+const string LinuxParser::kUptimeFilename{"/uptime"};
+const string LinuxParser::kMeminfoFilename{"/meminfo"};
+const string LinuxParser::kVersionFilename{"/version"};
+const string LinuxParser::kOSPath{"/etc/os-release"};
+const string LinuxParser::kPasswordPath{"/etc/passwd"};
 
 // BONUS: Update this to use std::filesystem
 vector<int> LinuxParser::Pids() {
   vector<int> pids;
-  DIR* directory = opendir(kProcDirectoryNew.c_str());
+  DIR* directory = opendir(kProcDirectory.c_str());
   struct dirent* file;
   while ((file = readdir(directory)) != nullptr) {
     // Is this a directory?
@@ -51,7 +51,7 @@ float LinuxParser::MemoryUtilization() {
   string key, value;
   float memTotal = 1.0;
   float memFree = 0.0;
-  std::ifstream filestream(kProcDirectoryNew + kMeminfoFilenameNew);
+  std::ifstream filestream(kProcDirectory + kMeminfoFilename);
   if (filestream.is_open()) {
     while (std::getline(filestream, lineBuffer)) {
       std::istringstream linestream(lineBuffer);
@@ -72,7 +72,7 @@ float LinuxParser::MemoryUtilization() {
 long LinuxParser::UpTime() {
   string uptime1, uptime2;
   string lineBuffer;
-  std::ifstream stream(kProcDirectoryNew + kUptimeFilenameNew);
+  std::ifstream stream(kProcDirectory + kUptimeFilename);
   if (stream.is_open()) {
     std::getline(stream, lineBuffer);
     std::istringstream linestream(lineBuffer);
@@ -85,7 +85,7 @@ long LinuxParser::UpTime() {
 int LinuxParser::TotalProcesses() {
   string key, value;
   string lineBuffer;
-  std::ifstream stream(kProcDirectoryNew + kStatFilenameNew);
+  std::ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     while(std::getline(stream, lineBuffer)) {
       std::istringstream linestream(lineBuffer);
@@ -101,7 +101,7 @@ int LinuxParser::TotalProcesses() {
 int LinuxParser::RunningProcesses() {
   string key, value;
   string lineBuffer;
-  std::ifstream stream(kProcDirectoryNew + kStatFilenameNew);
+  std::ifstream stream(kProcDirectory + kStatFilename);
   if (stream.is_open()) {
     while (std::getline(stream, lineBuffer)) {
       std::istringstream linestream(lineBuffer);
@@ -117,7 +117,7 @@ int LinuxParser::RunningProcesses() {
 std::string LinuxParser::OperatingSystem() {
   string lineBuffer;
   string key, value;
-  std::ifstream filestream(kOSPathNew);
+  std::ifstream filestream(kOSPath);
   if (filestream.is_open()) {
     while (std::getline(filestream, lineBuffer)) {
       std::replace(lineBuffer.begin(), lineBuffer.end(), ' ', '_');
@@ -138,7 +138,7 @@ std::string LinuxParser::OperatingSystem() {
 std::string LinuxParser::Kernel() {
     string os, version, kernel;
   string lineBuffer;
-  std::ifstream stream(kProcDirectoryNew + kVersionFilenameNew);
+  std::ifstream stream(kProcDirectory + kVersionFilename);
   if (stream.is_open()) {
     std::getline(stream, lineBuffer);
     std::istringstream linestream(lineBuffer);
@@ -153,7 +153,7 @@ long LinuxParser::Jiffies() {
 
 long LinuxParser::ActiveJiffies() {
   string lineBuffer;
-  std::string fileName{kProcDirectoryNew + kStatFilenameNew};
+  std::string fileName{kProcDirectory + kStatFilename};
   std::ifstream fileStream(fileName);
   if (fileStream.is_open()) {
     while (std::getline(fileStream, lineBuffer)) {
@@ -180,7 +180,7 @@ long LinuxParser::ActiveJiffies() {
 
 long LinuxParser::ActiveJiffies(int pid) {
   string token;
-  std::string fileName{kProcDirectoryNew + std::to_string(pid) + kStatFilenameNew};
+  std::string fileName{kProcDirectory + std::to_string(pid) + kStatFilename};
   std::ifstream fileStream(fileName);
   std::vector<std::string> tokens;
   const char delimiter = ' ';
@@ -198,7 +198,7 @@ long LinuxParser::ActiveJiffies(int pid) {
 
 long LinuxParser::IdleJiffies() {
   string lineBuffer;
-  std::string fileName{kProcDirectoryNew + kStatFilenameNew};
+  std::string fileName{kProcDirectory + kStatFilename};
   std::ifstream fileStream(fileName);
   if (fileStream.is_open()) {
     while (std::getline(fileStream, lineBuffer)) {
@@ -220,7 +220,7 @@ long LinuxParser::IdleJiffies() {
 std::string LinuxParser::Command(int pid) {
     string command;
   string lineBuffer;
-  std::string fileName{kProcDirectoryNew + std::to_string(pid) + kCmdlineFilenameNew};
+  std::string fileName{kProcDirectory + std::to_string(pid) + kCmdlineFilename};
   std::ifstream stream(fileName);
   if (stream.is_open()) {
     std::getline(stream, lineBuffer);
@@ -232,7 +232,7 @@ std::string LinuxParser::Command(int pid) {
 std::string LinuxParser::Ram(int pid) {
   string key, value;
   string lineBuffer;
-  std::string fileName{kProcDirectoryNew + std::to_string(pid) + kStatusFilenameNew};
+  std::string fileName{kProcDirectory + std::to_string(pid) + kStatusFilename};
   std::ifstream filestream(fileName);
   if (filestream.is_open()) {
     while (std::getline(filestream, lineBuffer)) {
@@ -253,7 +253,7 @@ std::string LinuxParser::Ram(int pid) {
 std::string LinuxParser::Uid(int pid) {
   string key, value;
   string lineBuffer;
-  std::string fileName{kProcDirectoryNew + std::to_string(pid) + kStatusFilenameNew};
+  std::string fileName{kProcDirectory + std::to_string(pid) + kStatusFilename};
   std::ifstream filestream(fileName);
   if (filestream.is_open()) {
     while (std::getline(filestream, lineBuffer)) {
@@ -270,7 +270,7 @@ std::string LinuxParser::Uid(int pid) {
 
 std::string LinuxParser::User(int pid) {
   string token;
-  std::string fileName{kPasswordPathNew};
+  std::string fileName{kPasswordPath};
   std::ifstream filestream(fileName);
   string uid = Uid(pid);
   std::vector<string> tokens;
@@ -290,7 +290,7 @@ std::string LinuxParser::User(int pid) {
 long int LinuxParser::UpTime(int pid) {
   string uptime1, uptime2;
   string lineBuffer;
-  std::string fileName{kProcDirectoryNew + std::to_string(pid) + kUptimeFilenameNew};
+  std::string fileName{kProcDirectory + std::to_string(pid) + kUptimeFilename};
   std::ifstream stream(fileName);
   if (stream.is_open()) {
     std::getline(stream, lineBuffer);

@@ -10,16 +10,16 @@ class LinuxParser {
 
 public:
 // Paths
-  static const std::string kProcDirectoryNew;
-  static const std::string kCmdlineFilenameNew;
-  static const std::string kCpuinfoFilenameNew;
-  static const std::string kStatusFilenameNew;
-  static const std::string kStatFilenameNew;
-  static const std::string kUptimeFilenameNew;
-  static const std::string kMeminfoFilenameNew;
-  static const std::string kVersionFilenameNew;
-  static const std::string kOSPathNew;
-  static const std::string kPasswordPathNew;
+  static const std::string kProcDirectory;
+  static const std::string kCmdlineFilename;
+  static const std::string kCpuinfoFilename;
+  static const std::string kStatusFilename;
+  static const std::string kStatFilename;
+  static const std::string kUptimeFilename;
+  static const std::string kMeminfoFilename;
+  static const std::string kVersionFilename;
+  static const std::string kOSPath;
+  static const std::string kPasswordPath;
 
   enum CPUStates {
     kUser_ = 1,
