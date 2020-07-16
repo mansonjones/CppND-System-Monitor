@@ -3,12 +3,14 @@
 
 #include <string>
 
-#include "CPUMeasurement.h"
+#include "Utilization.h"
+
 /*
 Basic class for Process representation
 It contains relevant attributes as shown below
 */
-class Process : public CPUMeasurement {
+
+class Process : public Utilization {
  public:
   Process(int pid);
   int Pid() const;              

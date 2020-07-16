@@ -1,9 +1,9 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-#include "CPUMeasurement.h"
+#include "Utilization.h"
 
-class Processor : public CPUMeasurement {
+class Processor : public Utilization {
  public:
   Processor();
   float Utilization(); 

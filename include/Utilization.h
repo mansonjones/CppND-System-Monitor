@@ -1,12 +1,12 @@
-#ifndef CPUMEASUREMENT_INCLUDE_H
-#define CPUMEASUREMENT_INCLUDE_H
+#ifndef UTILIZATION_INCLUDE_H
+#define UTILIZATION_INCLUDE_H
 
 #include <thread>
 #include <chrono>
 
 #include <iostream> // only needed for debugging
 
-class CPUMeasurement {
+class Utilization {
 public:
   long Jiffies() const;
   virtual long ActiveJiffies() const = 0;
