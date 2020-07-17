@@ -4,8 +4,6 @@
 #include <thread>
 #include <chrono>
 
-#include <iostream> // only needed for debugging
-
 class Utilization {
 public:
   long Jiffies() const;

@@ -7,10 +7,6 @@
 
 #include "linux_parser.h"
 
-#include <iostream> // remove after debugging
-
-
-
 using std::stof;
 using std::string;
 using std::to_string;
@@ -189,12 +185,6 @@ long LinuxParser::ActiveJiffies(int pid) {
       tokens.push_back(token);
     }
   }
-  /*
-  std::cout << " Debug " << std::endl;
-  for (std::string item : tokens) {
-    std::cout << item << std::endl;
-  }
-  */
  
   return atol(tokens[ProcessorStates::kUtime_].c_str()) + 
   atol(tokens[ProcessorStates::kStime_].c_str()) +
