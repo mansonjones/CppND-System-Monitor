@@ -36,6 +36,7 @@ void UnitTests::testProcess(int pid) {
   cout << "Command() " << process.Command() << endl;
   cout << "User() " << process.User() << endl;
   cout << "UpTime() " << process.UpTime() << endl;
+  cout << "CpuUtilization()" << process.CpuUtilization() << endl;
   cout << endl;
 }
 

@@ -165,12 +165,12 @@ long LinuxParser::ActiveJiffies() {
       long activeJiffies = 0;
       if (jiffies[0] == "cpu") {
         long activeJiffies = 
-          atol(jiffies[kUser_].c_str()) + 
-          atol(jiffies[kNice_].c_str()) + 
-          atol(jiffies[kSystem_].c_str()) + 
-          atol(jiffies[kIRQ_].c_str()) + 
-          atol(jiffies[kSoftIRQ_].c_str()) + 
-          atol(jiffies[kSteal_].c_str());
+          atol(jiffies[CPUStates::kUser_].c_str()) + 
+          atol(jiffies[CPUStates::kNice_].c_str()) + 
+          atol(jiffies[CPUStates::kSystem_].c_str()) + 
+          atol(jiffies[CPUStates::kIRQ_].c_str()) + 
+          atol(jiffies[CPUStates::kSoftIRQ_].c_str()) + 
+          atol(jiffies[CPUStates::kSteal_].c_str());
        return activeJiffies;
       }
     }
@@ -189,11 +189,19 @@ long LinuxParser::ActiveJiffies(int pid) {
       tokens.push_back(token);
     }
   }
-  long val1 = atol(tokens[13].c_str());
-  long val2 = atol(tokens[14].c_str());
-  long val3 = atol(tokens[15].c_str());
+  /*
+  std::cout << " Debug " << std::endl;
+  for (std::string item : tokens) {
+    std::cout << item << std::endl;
+  }
+  */
+ 
+  return atol(tokens[ProcessorStates::kUtime_].c_str()) + 
+  atol(tokens[ProcessorStates::kStime_].c_str()) +
+  atol(tokens[ProcessorStates::kCutime_].c_str()) +
+  atol(tokens[ProcessorStates::kCstime_].c_str()) +
+  atol(tokens[ProcessorStates::kStarttime_].c_str());
 
-  return val1 + val2 + val3;
 }
 
 long LinuxParser::IdleJiffies() {
@@ -208,8 +216,8 @@ long LinuxParser::IdleJiffies() {
         jiffies.push_back(jiffie);
       }
       if (jiffies[0] == "cpu") {
-        long idleJiffies = atol(jiffies[LinuxParser::kIdle_].c_str()) + 
-                           atol(jiffies[LinuxParser::kIOwait_].c_str());
+        long idleJiffies = atol(jiffies[CPUStates::kIdle_].c_str()) + 
+                           atol(jiffies[CPUStates::kIOwait_].c_str());
        return idleJiffies;
       }
     }
@@ -287,17 +295,28 @@ std::string LinuxParser::User(int pid) {
   return string(); 
 }
 
+// UpTime in seconds
 long int LinuxParser::UpTime(int pid) {
-  string uptime1, uptime2;
-  string lineBuffer;
-  std::string fileName{kProcDirectory + std::to_string(pid) + kUptimeFilename};
-  std::ifstream stream(fileName);
-  if (stream.is_open()) {
-    std::getline(stream, lineBuffer);
-    std::istringstream linestream(lineBuffer);
-    linestream >> uptime1 >> uptime2;
-    return stoi(uptime1);
+
+  return 100;
+  /*
+   string token;
+  std::string fileName{kProcDirectory + std::to_string(pid) + kStatFilename};
+  std::ifstream fileStream(fileName);
+  std::vector<std::string> tokens;
+  const char delimiter = ' ';
+  if (fileStream.is_open()) {
+    while (std::getline(fileStream, token, delimiter)) {
+      tokens.push_back(token);
+    }
   }
-  return 0;
+
+  return 100;
+  */
+  // long foo = atol(tokens[ProcessorStates::kStarttime_].c_str()) / static_cast<long>(sysconf(_SC_CLK_TCK));
+ 
+   // return foo;
+
+  // return atol(tokens[ProcessorStates::kStarttime_].c_str()) / sysconf(_SC_CLK_TCK);
 }
 

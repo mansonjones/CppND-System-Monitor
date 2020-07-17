@@ -8,12 +8,12 @@
 int main() {
   System system;
   
-  /*
-  UnitTests::testSystem();
-  UnitTests::testProcess(1);
-  UnitTests::testLinuxParser(1);
-  UnitTests::testProcessor();
-  */
+  
+  // UnitTests::testSystem();
+  // UnitTests::testProcess(1);
+  // UnitTests::testLinuxParser(1);
+  // UnitTests::testProcessor();
+
  
   NCursesDisplay::Display(system);
 }
