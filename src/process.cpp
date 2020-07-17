@@ -17,25 +17,18 @@ pid_(pid),
 user_(LinuxParser::User(pid)),
 command_(LinuxParser::Command(pid)),
 cpuUtilization_(0.432),
-ram_(LinuxParser::Ram(pid_)),
-uptime_(LinuxParser::UpTime(pid_))
+ram_(LinuxParser::Ram(pid)),
+uptime_(LinuxParser::UpTime(pid))
   {
-    setCachedActiveJiffies(1);
-    setCachedIdleJiffies(1);
-     
-     // setCachedActiveJiffies(LinuxParser::ActiveJiffies(pid));
-     // setCachedIdleJiffies(LinuxParser::IdleJiffies());
+    setCachedActiveJiffies(0);
+    setCachedIdleJiffies(0);
      
  }
 
 int Process::Pid() const { return pid_; }
 
 float Process::CpuUtilization() const {
-    long upTime = LinuxParser::UpTime() * sysconf(_SC_CLK_TCK);
-    long processTime = LinuxParser::ActiveJiffies(pid_);
-    float cpuUtilization = static_cast<float>(processTime)/static_cast<float>(upTime); 
-    return cpuUtilization;
-    // return CalculateUtilization<Process>(*this);
+   return cpuUtilization_;
 }
 
 string Process::Command() const {
@@ -57,8 +50,14 @@ long int Process::UpTime() const {
 void Process::update() {
     user_ = LinuxParser::User(pid_);
     command_ = LinuxParser::Command(pid_);
+
+    long upTime = LinuxParser::UpTime() * sysconf(_SC_CLK_TCK);
+    long processTime = LinuxParser::ActiveJiffies(pid_);
+    cpuUtilization_ = static_cast<float>(processTime)/static_cast<float>(upTime); 
+ 
     ram_ = LinuxParser::Ram(pid_);
-    uptime_ =  100; // LinuxParser::UpTime(pid_);
+    uptime_ = LinuxParser::UpTime(pid_);
+
 }
 
 long Process::ActiveJiffies() const {
@@ -66,25 +65,16 @@ long Process::ActiveJiffies() const {
 }
 
 bool Process::operator<(Process const& a) const { 
-    
-
     if ( std::stol(Ram()) > std::stol(a.Ram()) ) {
         return true;
     }
-    if ( CpuUtilization() < a.CpuUtilization()) {
-        return true;
-    }
-    
+
     return false; 
 }
 
 bool Process::operator>(Process const& a) const { 
-    
 
     if ( std::stol(Ram()) > std::stol(a.Ram()) ) {
-        return true;
-    }
-    if ( CpuUtilization() > a.CpuUtilization()) {
         return true;
     }
     

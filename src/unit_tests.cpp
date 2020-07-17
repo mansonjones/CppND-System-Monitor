@@ -36,7 +36,7 @@ void UnitTests::testProcess(int pid) {
   cout << "Command() " << process.Command() << endl;
   cout << "User() " << process.User() << endl;
   cout << "UpTime() " << process.UpTime() << endl;
-  cout << "CpuUtilization()" << process.CpuUtilization() << endl;
+  cout << "CpuUtilization() " << process.CpuUtilization() << endl;
   cout << endl;
 }
 
@@ -45,6 +45,7 @@ void UnitTests::testLinuxParser(int pid) {
   cout << " ***** LinuxParser" << endl;
   cout << "MemoryUtilization " << LinuxParser::MemoryUtilization() << std::endl;
   cout << "UpTime() " << LinuxParser::UpTime() << std::endl;
+  cout << "UpTime(1) " << LinuxParser::UpTime(1) << std::endl;
   cout << "*** LinuxParser Tests ***" << endl;
   std::vector<int> pids = LinuxParser::Pids();
   cout << "LinuxParser::Pids()" << endl;

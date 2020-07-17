@@ -53,33 +53,13 @@ vector<Process>& System::Processes() {
     }
     
     // Update all processes
-    
+  
     for (auto& process: processes_) {
         process.update();
     }
     
     std::sort(processes_.begin(), processes_.end(), std::greater<Process>());
     return processes_;
-    /* Here is his code from the demo
-    // Create a set
-    set<int> extant_pids;
-    for (Process const& process:  processes_) {
-        extant_pid.insert(process.Pid());
-    }
-    // Emplace all new processes
-    for (int pid : pids) {
-        if (extant_pids.find(pid) == extant_pids.end()) {
-            processes_.emplace_back(pid);
-        }
-    }
-
-    // Update CPU utiliztion
-    for (auto& process : processes) {
-        process.CpuUtilization(LinuxParser::ActiveJiffies(process.Pid()))
-        LinuxParser::Jiffies());
-    }
-
-    */
 }
 
 std::string System::Kernel() const { 

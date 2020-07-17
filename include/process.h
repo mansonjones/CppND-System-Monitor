@@ -18,7 +18,8 @@ class Process : public Utilization {
   std::string Command() const;    
   float CpuUtilization() const;       
   std::string Ram() const;    
-  long int UpTime() const;           
+  long int UpTime() const;
+             
   bool operator<(Process const& a) const; 
   bool operator>(Process const& a) const; 
   

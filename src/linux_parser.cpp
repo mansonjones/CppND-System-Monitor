@@ -5,6 +5,8 @@
 #include <thread> // Needed for delay in CpuUtilization()
 #include <chrono> // Needed for delay in CpuUtilization()
 
+#include <iostream> // delete after debugging
+
 #include "linux_parser.h"
 
 using std::stof;
@@ -158,7 +160,6 @@ long LinuxParser::ActiveJiffies() {
       for (std::string jiffie; lineStream >> jiffie;) {
         jiffies.push_back(jiffie);
       }
-      long activeJiffies = 0;
       if (jiffies[0] == "cpu") {
         long activeJiffies = 
           atol(jiffies[CPUStates::kUser_].c_str()) + 
@@ -287,11 +288,9 @@ std::string LinuxParser::User(int pid) {
 
 // UpTime in seconds
 long int LinuxParser::UpTime(int pid) {
-
-  return 100;
-  /*
-   string token;
+  string token;
   std::string fileName{kProcDirectory + std::to_string(pid) + kStatFilename};
+  // std::cout << "fileName" << fileName << std::endl;
   std::ifstream fileStream(fileName);
   std::vector<std::string> tokens;
   const char delimiter = ' ';
@@ -300,13 +299,8 @@ long int LinuxParser::UpTime(int pid) {
       tokens.push_back(token);
     }
   }
-
-  return 100;
-  */
-  // long foo = atol(tokens[ProcessorStates::kStarttime_].c_str()) / static_cast<long>(sysconf(_SC_CLK_TCK));
- 
-   // return foo;
-
-  // return atol(tokens[ProcessorStates::kStarttime_].c_str()) / sysconf(_SC_CLK_TCK);
+ // std::cout << "token = " << tokens[ProcessorStates::kStarttime_] << std::endl;
+  long upTime = atol(tokens[ProcessorStates::kStarttime_].c_str()) / static_cast<long int>(sysconf(_SC_CLK_TCK));
+  return upTime;
 }
 
